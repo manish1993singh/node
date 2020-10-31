@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Person</title>
+    <style>
+        .main {
+            font-family: system-ui;
+            width: 30vw;
+            height: 90vh;
+            border-radius: 3px;
+            box-shadow: 0 0 7px 3px #a7a7a7;
+            background-color: #ffffff;
+            display: flex;
+            margin: auto;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+        .main input{
+            border: none;
+            border-bottom: 1px solid #666666;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 2px 5px;
+            margin: 10px 5px 0px 5px;
+        }
+        .main input::placeholder{
+            font-size: 14px;
+            color: #989898;
+            font-weight: normal;
+        }
+        .main input:focus{
+            outline: none;
+        }
+        .main label{
+            font-size: 13px;
+        }
+
+        .button-holder{
+            box-sizing: border-box;
+            width: 100%;
+            display: flex;
+            padding: 10px 10px 0px 10px;
+            justify-content: flex-end;
+        }
+        .button-holder button{
+            color: #ffffff;
+            font-weight: bolder;
+            background-color: #24adfe;
+            transition: 200ms;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            padding: 3px 5px;
+        }
+        .button-holder button:hover{
+            background-color: #007ee4;
+            transition: 200ms;
+        }
+        .button-holder button:last-child{
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div  class="main">
+    <h3>Person Creation Form</h3>
+        <div><label>Name:</label><input name="name" type="text" autocomplete="off" placeholder="Enter Name.."></div>
+    <div><label>Age:</label><input name="age" type="number" autocomplete="off" placeholder="Enter Age.."></div>
+    <div><label>About:</label><input name="about" type="text" autocomplete="off" placeholder="Say few words"></div>
+        <div class="button-holder"><button onclick="backToAll()">All</button><button onclick="submit()">Create</button></div>
+</div>
+</body>
+<script type="text/javascript">
+   function backToAll() {
+       window.location.href = window.location.origin+'/people/'
+   }
+function submit() {
+    var data = {};
+    document.querySelectorAll('input').forEach(field =>{
+        data[field.name] = field.value;
+    })
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+
+        }
+    }
+    xhttp.open('post','/people/create-person')
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+    xhttp.send(JSON.stringify(data))
+}
+</script>
+</html>
