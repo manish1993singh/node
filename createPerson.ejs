@@ -69,12 +69,13 @@
     </style>
 </head>
 <body>
-<div  class="main">
+<div  class="main" id="main" _id=<%=data._id%>>
+
     <h3>Person Creation Form</h3>
-        <div><label>Name:</label><input name="name" type="text" autocomplete="off" placeholder="Enter Name.."></div>
-    <div><label>Age:</label><input name="age" type="number" autocomplete="off" placeholder="Enter Age.."></div>
-    <div><label>About:</label><input name="about" type="text" autocomplete="off" placeholder="Say few words"></div>
-        <div class="button-holder"><button onclick="backToAll()">All</button><button onclick="submit()">Create</button></div>
+        <div><label>Name:</label><input id="name" name="name" type="text" autocomplete="off" placeholder="Enter Name.." value=<%=data.name%>></div>
+    <div><label>Age:</label><input name="age" type="number" autocomplete="off" placeholder="Enter Age.." value=<%=data.age%>></div>
+    <div><label>About:</label><input name="about" type="text" autocomplete="off" placeholder="Say few words" value=<%=data.about%>></div>
+        <div class="button-holder"><button onclick="backToAll()">All</button><button onclick="submit()"><%if(!data._id){%>Create<%}%><%if(data._id){%>Update<%}%></button></div>
 </div>
 </body>
 <script type="text/javascript">
@@ -82,17 +83,26 @@
        window.location.href = window.location.origin+'/people/'
    }
 function submit() {
+       const _id = document.getElementById('main').getAttribute('_id')
     var data = {};
+       if(_id){
+           data._id = _id;
+       }
     document.querySelectorAll('input').forEach(field =>{
         data[field.name] = field.value;
     })
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-
+            const result = JSON.parse(this.response)
+            window.location.href = window.location.origin+'/people/html/' + result.result[0]._id
         }
     }
-    xhttp.open('post','/people/create-person')
+    if(_id){
+        xhttp.open('post','/people/update-person')
+    }else {
+        xhttp.open('post','/people/create-person')
+    }
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
     xhttp.send(JSON.stringify(data))

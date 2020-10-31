@@ -49,13 +49,13 @@
             font-family: system-ui;
             color: #3c3c3c;
         }
-        .card:hover .action-ribbon{
-            right: -70px;
-            transition: right 100ms linear 200ms;
-        }
+        /*.card:hover .action-ribbon{*/
+        /*    right: -70px;*/
+        /*    transition: right 100ms linear 200ms;*/
+        /*}*/
         .action-ribbon{
             position: absolute;
-            right: -100px;
+            right: -70px;
             display: flex;
             transition: right 200ms linear 1s;
             height: 30px;
@@ -65,7 +65,7 @@
             border: 1px solid #b9b9b9;
             padding-right: 20px;
         }
-        .card:hover .action-ribbon:hover{
+        .action-ribbon:hover{
             right: -15px;
             transition: 300ms;
         }
@@ -114,6 +114,30 @@
             background-image: url("/icon/delete.svg");
 
         }
+        .deleted{
+            background-color: rgba(255, 72, 35, 0.78);
+            cursor: none;
+            pointer-events: none;
+            min-height: 0px;
+            padding: 0;
+            box-shadow: none;
+            transition: 300ms;
+        }
+        .deleted .pic{
+            height: 0;
+            width: 0;
+            transition: 300ms;
+        }
+        .deleted div, span{
+            font-size: 0;
+            height: 0;
+            transition: 300ms;
+        }
+        .deleted .action-ribbon{
+            height: 0;
+            width: 0;
+            transition: 300ms;
+        }
     </style>
 </head>
 <body>
@@ -131,22 +155,28 @@
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
                 var container = document.getElementById('card-container');
-                console.log(this.response)
                 console.log(JSON.parse(this.response))
                 JSON.parse(this.response).forEach(ele => {
                     var element = document.createElement('div', {class: 'df'})
+                    var _id = ele._id
                     element.classList.add('card')
                     element.onclick = function () {
-                        details(ele.name)
+                        details(ele._id)
                     };
-                    element.setAttribute('_id', ele)
-                    element.innerHTML = `<div class="pic" style="background-image: url('${ele.primary_pic}')"></div><div class="name">${ele.name}</div>
+                    element.setAttribute('_id', ele._id)
+                    element.innerHTML = `<div class="pic" ></div><div class="name">${ele.name}</div>
 <div class="action-ribbon">
 <div class="arrow action-icon"></div>
 <div class="edit action-icon"></div>
 <div class="delete action-icon"></div>
 </div>`
                     container.appendChild(element)
+                    element.getElementsByClassName("delete")[0].onclick = function (event) {
+                        deletePerson(event,_id,element)
+                    }
+                    element.getElementsByClassName("edit")[0].onclick = function (event) {
+                        editPerson(event,_id,element)
+                    }
                 })
             }
         }
@@ -155,7 +185,34 @@
     })()
 
     function details(_id) {
-        window.location.href = window.location.origin + '/people/html/' + _id
+        window.location.href = window.location.origin + '/people/html/' + _id;
+    }
+    function editPerson(event,_id,element) {
+        event.preventDefault();
+        event.stopPropagation();
+        // const xmlhttp = new XMLHttpRequest();
+        // xmlhttp.onreadystatechange = function () {
+        //     if(this.readyState === 4 && this.status === 200){
+        //         // console.log(JSON.parse(this.response))
+        //         // element.classList.add('deleted');
+        //     }
+        // }
+        // xmlhttp.open('GET','/people/update/'+_id);
+        // xmlhttp.send()
+        window.location.href = window.location.origin + '/people/update/' + _id;
+    }
+    function deletePerson(event,_id,element){
+        event.preventDefault();
+        event.stopPropagation();
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if(this.readyState === 4 && this.status === 200){
+                // console.log(JSON.parse(this.response))
+                element.classList.add('deleted');
+            }
+        }
+        xmlhttp.open('POST','/people/delete/'+_id);
+        xmlhttp.send()
     }
 </script>
 </html>
