@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="/css/test.css"/>
+</head>
+<body class="main">
+<h3>Login</h3>
+<div><label>User Name: </label><input name="username" placeholder="Enter user name "/></div>
+<div><label>Password: </label><input name="password" type="password" placeholder="Enter Password"/></div>
+<div class="button-holder"><button>Login</button></div>
+</body>
+<script>
+    function login() {
+        const fields = document.querySelectorAll('input');
+        const data = {}
+        fields.forEach(field => data[field.name] = field.value)
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+
+        };
+        xmlhttp.open('post','/user/login')
+        xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xmlhttp.send(JSON.stringify(data))
+    }
+</script>
+</html>

@@ -5,22 +5,12 @@ const path = require('path')
 
 // const client = new MongoClient("mongodb://127.0.0.1:27017/",{ useUnifiedTopology: true });
 const client = new MongoClient(`mongodb+srv://manish1993singh:qazxsw@123@node-express-mongo.3ftjm.mongodb.net/people?retryWrites=true&w=majority`,{ useUnifiedTopology: true });
-async function db(){
-    try {
-        await client.connect();
-        await  listDatabases(client);
-
-    } catch (e) {
-        console.error(e);
-    } finally {
-        // await client.close();
-    }
-
+async function startDb(){
+    client.connect((e)=>console.log(e))
 }
-db()
+startDb();
 async function listDatabases(client){
     databasesList = await client.db().admin().listDatabases();
-    // console.log(databasesList)
 };
 
 var router = express.Router();

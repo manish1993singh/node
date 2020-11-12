@@ -1,0 +1,68 @@
+.main {
+  font-family: system-ui;
+  width: 30vw;
+  height: 90vh;
+  border-radius: 3px;
+  box-shadow: 0 0 7px 3px #a7a7a7;
+  background-color: #ffffff;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.main input {
+  border: none;
+  border-bottom: 1px solid #666666;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 5px;
+  margin: 10px 5px 0px 5px;
+}
+
+.main input::placeholder {
+  font-size: 14px;
+  color: #989898;
+  font-weight: normal;
+}
+
+.main input:focus {
+  outline: none;
+}
+
+.main label {
+  font-size: 13px;
+}
+
+.button-holder {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  padding: 10px 10px 0px 10px;
+  justify-content: flex-end;
+}
+
+.button-holder button {
+  color: #ffffff;
+  font-weight: bolder;
+  background-color: #24adfe;
+  transition: 200ms;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 3px 5px;
+}
+
+.button-holder button:hover {
+  background-color: #007ee4;
+  transition: 200ms;
+}
+
+.button-holder button:last-child {
+  margin-left: 10px;
+}
+
+/*# sourceMappingURL=style.css.map */

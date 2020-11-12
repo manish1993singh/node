@@ -1,0 +1,15 @@
+.main {
+    font-family: system-ui;
+    width: 30vw;
+    height: 90vh;
+    border-radius: 3px;
+    box-shadow: 0 0 7px 3px #a7a7a7;
+    background-color: #ffffff;
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    overflow: auto;
+    box-sizing: border-box;
+}
