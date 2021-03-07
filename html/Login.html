@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="/css/test.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
-<body class="main">
-<h3>Login</h3>
-<div><label>User Name: </label><input name="username" placeholder="Enter user name "/></div>
-<div><label>Password: </label><input name="password" type="password" placeholder="Enter Password"/></div>
-<div class="button-holder"><button>Login</button></div>
+<body>
+<div class="login-main">
+    <h3>Login</h3>
+    <div><label>User Name: </label><input name="username" placeholder="Enter user name "/></div>
+    <div><label>Password: </label><input name="password" type="password" placeholder="Enter Password"/></div>
+    <div class="button-holder">
+        <button onclick="login()">Login</button>
+    </div>
+</div>
 </body>
 <script>
     function login() {
@@ -20,7 +24,7 @@
         xmlhttp.onreadystatechange = function () {
 
         };
-        xmlhttp.open('post','/user/login')
+        xmlhttp.open('post', '/user/login')
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xmlhttp.send(JSON.stringify(data))
     }

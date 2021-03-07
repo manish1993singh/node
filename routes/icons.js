@@ -1,7 +1,5 @@
 const express = require('express');
 const router = new express.Router();
-const ejs = require('ejs');
-const {MongoClient} = require('mongodb')
 const path = require('path')
 
 

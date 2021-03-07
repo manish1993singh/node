@@ -1,5 +1,5 @@
 var express = require('express')
-const {MongoClient,ObjectID,ObjectId} = require('mongodb')
+const {MongoClient,ObjectId} = require('mongodb')
 const ejs = require('ejs');
 const path = require('path')
 
@@ -19,7 +19,7 @@ router.get('/dbs', async function (req,res) {
     res.send(await client.db().admin().listDatabases())
 })
 router.get('/', function (req,res) {
-    ejs.renderFile(path.join(__dirname, 'people.ejs'),{},{},function (error,template) {
+    ejs.renderFile(path.join(__dirname, '/../ejs/people.ejs'),{},{},function (error,template) {
         if (error) {
             throw error;
         } else {
@@ -29,7 +29,7 @@ router.get('/', function (req,res) {
 })
 
 router.get('/html/:name', function (req,res) {
-    ejs.renderFile(path.join(__dirname, 'person.ejs'),{},{},function (error,template) {
+    ejs.renderFile(path.join(__dirname, '/../ejs/person.ejs'),{},{},function (error,template) {
         if (error) {
             throw error;
         } else {
@@ -39,7 +39,7 @@ router.get('/html/:name', function (req,res) {
 })
 router.get('/create_html',function (req, res) {
     const data = {}
-    ejs.renderFile(path.join(__dirname,'createPerson.ejs'),{data},{},function (error,template) {
+    ejs.renderFile(path.join(__dirname,'/../ejs/createPerson.ejs'),{data},{},function (error,template) {
         if (error) {
             throw error;
         } else {
@@ -86,7 +86,7 @@ router.get('/update/:_id', async function(req, res){
 
         if(result.length > 0){
             const data = result[0]
-            ejs.renderFile(path.join(__dirname,'createPerson.ejs'),{data},{},function (error,template) {
+            ejs.renderFile(path.join(__dirname,'/../ejs/createPerson.ejs'),{data},{},function (error,template) {
                 if (error) {
                     throw error;
                 } else {

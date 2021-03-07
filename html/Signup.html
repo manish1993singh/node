@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+<div class="signup-main">
+    <h3>Sign Up</h3>
+    <div><label>User Name: </label><input name="username" placeholder="Enter user name "/></div>
+    <div><label>Password: </label><input name="password" type="password" placeholder="Enter Password"/></div>
+    <div class="button-holder">
+        <button onclick="SignUp()">SignUp</button>
+    </div>
+</div>
+</body>
+<script>
+    function SignUp() {
+        const dataFields = document.querySelectorAll('input');
+        let dataNotFound = 0;
+        let data;
+        dataFields.forEach(field =>{
+            if(!field.value.trim()){
+                dataNotFound++ ;
+            }
+            data[field.name] = field.value;
+        })
+        if(dataNotFound > 0){
+            const errorUi = document.createElement('div');
+            errorUi.classList.add('error-ui');
+            errorUi.innerHTML = 'Fill in all required fields'
+            document.querySelector('body').prepend(errorUi)
+            return
+        }
+        const xmlhttp = XMLHttpRequest();
+        xmlhttp.open('post','/user/signup')
+        xmlhttp.send(JSON.stringify(data))
+    }
+</script>
+</html>

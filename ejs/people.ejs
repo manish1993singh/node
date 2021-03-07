@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+
+    </style>
+</head>
+<body>
+<div><button class="logout-button" onclick="l">Logout</button></div>
+<div id="main" class="main">
+    <div class="card-container" id="card-container"></div>
+    <div class="create-button" onclick="createPerson()">+</div>
+</div>
+</body>
+<script type="text/javascript">
+    function createPerson() {
+        window.location.href = window.location.origin+'/people/create_html'
+    }
+    (function () {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                var container = document.getElementById('card-container');
+                console.log(JSON.parse(this.response))
+                JSON.parse(this.response).forEach(ele => {
+                    var element = document.createElement('div', {class: 'df'})
+                    var _id = ele._id
+                    element.classList.add('card')
+                    element.onclick = function () {
+                        details(ele._id)
+                    };
+                    element.setAttribute('_id', ele._id)
+                    element.innerHTML = `<div class="pic" ></div><div class="name">${ele.name}</div>
+<div class="action-ribbon">
+<div class="arrow action-icon"></div>
+<div class="edit action-icon"></div>
+<div class="delete action-icon"></div>
+</div>`
+                    container.appendChild(element)
+                    element.getElementsByClassName("delete")[0].onclick = function (event) {
+                        deletePerson(event,_id,element)
+                    }
+                    element.getElementsByClassName("edit")[0].onclick = function (event) {
+                        editPerson(event,_id,element)
+                    }
+                })
+            }
+        }
+        xhttp.open('GET','/people/all')
+        xhttp.send()
+    })()
+
+    function details(_id) {
+        window.location.href = window.location.origin + '/people/html/' + _id;
+    }
+    function editPerson(event,_id,element) {
+        event.preventDefault();
+        event.stopPropagation();
+        window.location.href = window.location.origin + '/people/update/' + _id;
+    }
+    function deletePerson(event,_id,element){
+        event.preventDefault();
+        event.stopPropagation();
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if(this.readyState === 4 && this.status === 200){
+                // console.log(JSON.parse(this.response))
+                element.classList.add('deleted');
+            }
+        }
+        xmlhttp.open('POST','/people/delete/'+_id);
+        xmlhttp.send()
+    }
+    function Logout() {
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState === 4 && this.status === 200){
+                xmlhttp.open('get','/user/login')
+                xmlhttp.send()
+            }
+        }
+        xmlhttp.open('get','/user/logout/');
+        xmlhttp.send()
+    }
+</script>
+</html>
